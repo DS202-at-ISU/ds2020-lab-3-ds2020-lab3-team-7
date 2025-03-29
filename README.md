@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/orjN5TIA)
 
 <!-- README.md is generated from README.Rmd. Please edit the README.Rmd file -->
 
@@ -72,10 +71,116 @@ between 1 and 5 (look into the function `parse_number`); Death is a
 categorical variables with values “yes”, “no” and ““. Call the resulting
 data set `deaths`.
 
+``` r
+library(tidyverse)
+
+av %>% 
+  select(
+    Name.Alias,
+    starts_with("Death")
+  ) %>% 
+  head()
+```
+
+    ##                    Name.Alias Death1 Death2 Death3 Death4 Death5
+    ## 1   Henry Jonathan "Hank" Pym    YES                            
+    ## 2              Janet van Dyne    YES                            
+    ## 3 Anthony Edward "Tony" Stark    YES                            
+    ## 4         Robert Bruce Banner    YES                            
+    ## 5                Thor Odinson    YES    YES                     
+    ## 6      Richard Milhouse Jones     NO
+
+``` r
+deaths <- av %>% 
+  pivot_longer(
+    starts_with("Death"),
+    names_to = "Time",
+    values_to = "Died"
+  ) %>% 
+  select(
+    URL, Name.Alias, Time, Died
+  )
+head(deaths)
+```
+
+    ## # A tibble: 6 × 4
+    ##   URL                                                Name.Alias      Time  Died 
+    ##   <chr>                                              <chr>           <chr> <chr>
+    ## 1 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jonatha… Deat… "YES"
+    ## 2 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jonatha… Deat… ""   
+    ## 3 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jonatha… Deat… ""   
+    ## 4 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jonatha… Deat… ""   
+    ## 5 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jonatha… Deat… ""   
+    ## 6 http://marvel.wikia.com/Janet_van_Dyne_(Earth-616) "Janet van Dyn… Deat… "YES"
+
+``` r
+View(deaths)
+```
+
 Similarly, deal with the returns of characters.
+
+``` r
+av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
+
+av %>% 
+  select(
+    Name.Alias,
+    starts_with("Return")
+  ) %>% 
+  head()
+```
+
+    ##                    Name.Alias Return1 Return2 Return3 Return4 Return5
+    ## 1   Henry Jonathan "Hank" Pym      NO                                
+    ## 2              Janet van Dyne     YES                                
+    ## 3 Anthony Edward "Tony" Stark     YES                                
+    ## 4         Robert Bruce Banner     YES                                
+    ## 5                Thor Odinson     YES      NO                        
+    ## 6      Richard Milhouse Jones
+
+``` r
+returns <- av %>% 
+  pivot_longer(
+    starts_with("Return"),
+    names_to = "Time",
+    values_to = "Returned"
+  ) %>% 
+  select(
+    URL, Name.Alias, Time, Returned
+  )
+head(returns)
+```
+
+    ## # A tibble: 6 × 4
+    ##   URL                                                Name.Alias   Time  Returned
+    ##   <chr>                                              <chr>        <chr> <chr>   
+    ## 1 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jona… Retu… "NO"    
+    ## 2 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jona… Retu… ""      
+    ## 3 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jona… Retu… ""      
+    ## 4 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jona… Retu… ""      
+    ## 5 http://marvel.wikia.com/Henry_Pym_(Earth-616)      "Henry Jona… Retu… ""      
+    ## 6 http://marvel.wikia.com/Janet_van_Dyne_(Earth-616) "Janet van … Retu… "YES"
+
+``` r
+View(returns)
+```
 
 Based on these datasets calculate the average number of deaths an
 Avenger suffers.
+
+``` r
+numdeaths <- deaths %>%
+  filter(Died == "YES") %>%
+  count(URL) %>% summarise(averagedeaths = sum(n)/nrow(av))
+  #had to use URL because some of the names were null and then it made one row with 7 deaths for all null names
+
+#average number of deaths per avenger is .5144509
+numdeaths$averagedeaths
+```
+
+    ## [1] 0.5144509
+
+Average number of deaths for an avenger is .5144509
 
 ## Individually
 

@@ -31,9 +31,77 @@ head(av)
 
 Get the data into a format where the five columns for Death[1-5] are replaced by two columns: Time, and Death. Time should be a number between 1 and 5 (look into the function `parse_number`); Death is a categorical variables with values "yes", "no" and "". Call the resulting data set `deaths`. 
 
+```{r, warning=FALSE, message=FALSE}
+
+library(tidyverse)
+
+av %>% 
+  select(
+    Name.Alias,
+    starts_with("Death")
+  ) %>% 
+  head()
+
+
+deaths <- av %>% 
+  pivot_longer(
+    starts_with("Death"),
+    names_to = "Time",
+    values_to = "Died"
+  ) %>% 
+  select(
+    URL, Name.Alias, Time, Died
+  )
+head(deaths)
+View(deaths)
+
+
+```
+
 Similarly, deal with the returns of characters.
 
+```{r, message=FALSE, warning=FALSE}
+
+av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
+
+av %>% 
+  select(
+    Name.Alias,
+    starts_with("Return")
+  ) %>% 
+  head()
+
+returns <- av %>% 
+  pivot_longer(
+    starts_with("Return"),
+    names_to = "Time",
+    values_to = "Returned"
+  ) %>% 
+  select(
+    URL, Name.Alias, Time, Returned
+  )
+head(returns)
+View(returns)
+
+
+```
+
 Based on these datasets calculate the average number of deaths an Avenger suffers. 
+
+```{r, message=FALSE, warning=FALSE}
+
+numdeaths <- deaths %>%
+  filter(Died == "YES") %>%
+  count(URL) %>% summarise(averagedeaths = sum(n)/nrow(av))
+  #had to use URL because some of the names were null and then it made one row with 7 deaths for all null names
+
+#average number of deaths per avenger is .5144509
+numdeaths$averagedeaths
+
+```
+  
+Average number of deaths for an avenger is .5144509  
+
 
 ## Individually
 
