@@ -207,3 +207,88 @@ fact-checking endeavor.
 
 Upload your changes to the repository. Discuss and refine answers as a
 team.
+
+### - Kaitlyn Hoyme -
+
+### FiveThirtyEight Statement
+
+> “But you can only tempt death so many times. There’s a 2-in-3 chance
+> that a member of the Avengers returned from their first stint in the
+> afterlife, but only a 50 percent chance they recovered from a second
+> or third death.” - fivethirtyeight.com
+
+### Include the code
+
+``` r
+deadavengers <- av %>%
+  filter(Death1 == "YES") %>%
+  count(URL) 
+
+returnedavengers <- av %>%
+  filter(Death1 == "YES", Return1 == "YES") %>%
+  count(URL) 
+
+#count(returnedavengers)$n
+#46 avengers died and came back once
+#count(deadavengers)$n
+#69 avengers died once
+
+firstdeathreturn <- count(returnedavengers)$n / count(deadavengers)$n
+firstdeathreturn
+```
+
+    ## [1] 0.6666667
+
+``` r
+#This is 2/3, so the first part of the statement is correct, as we can see after their first death, 2/3 of the avengers came back.
+
+diedtwice <- av %>% 
+  filter(Death2=="YES") %>% count(URL)
+#count(diedtwice)$n
+#16 avengers died twice
+
+diedthrice <- av %>% 
+  filter(Death3=="YES") %>% count(URL)
+#count(diedthrice)$n
+#2 avengers died 3 times
+
+returnedafter2 <- av %>%
+   filter(Return2 == "YES") %>% count(URL)
+#returnedafter2
+
+returnedafter3 <- av %>%
+    filter(Return3 == "YES") %>% count(URL)
+#returnedafter3
+
+#count(returnedafter2)$n
+#8 avengers returned after their second death
+
+
+#return after dying twice
+count(returnedafter2)$n / count(diedtwice)$n
+```
+
+    ## [1] 0.5
+
+``` r
+#return after dying thrice
+count(returnedafter3)$n / count(diedthrice)$n
+```
+
+    ## [1] 0.5
+
+``` r
+#both of these = .5, so we see the statement is true.
+```
+
+### Include your answer
+
+As we can confirm by looking at the code, the statement was correct in
+saying that after the first death there is about a 2/3 chance of
+returning, and after the 2nd or 3rd there is a 50% chance.
+
+### - Team member -
+
+### - Team member -
+
+### - Team member -
