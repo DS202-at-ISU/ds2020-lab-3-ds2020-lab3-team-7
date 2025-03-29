@@ -210,14 +210,10 @@ team.
 
 ### - Kaitlyn Hoyme -
 
-### FiveThirtyEight Statement
-
 > “But you can only tempt death so many times. There’s a 2-in-3 chance
 > that a member of the Avengers returned from their first stint in the
 > afterlife, but only a 50 percent chance they recovered from a second
 > or third death.” - fivethirtyeight.com
-
-### Include the code
 
 ``` r
 deadavengers <- av %>%
@@ -280,8 +276,6 @@ count(returnedafter3)$n / count(diedthrice)$n
 ``` r
 #both of these = .5, so we see the statement is true.
 ```
-
-### Include your answer
 
 As we can confirm by looking at the code, the statement was correct in
 saying that after the first death there is about a 2/3 chance of
