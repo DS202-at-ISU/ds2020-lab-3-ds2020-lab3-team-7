@@ -281,7 +281,24 @@ As we can confirm by looking at the code, the statement was correct in
 saying that after the first death there is about a 2/3 chance of
 returning, and after the 2nd or 3rd there is a 50% chance.
 
-### - Team member -
+### - Cassidy Berghoff -
+
+> “The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta —
+> an android based on Janet van Dyne and built by Ultron — who has been
+> destroyed five times and then recovered five times.” -
+> fivethirtyeight.com
+
+``` r
+numDeath = deaths %>% filter(Name.Alias == "Jocasta", Died == "YES") %>% nrow()
+numReturn = returns %>% filter(Name.Alias == "Jocasta", Returned == "YES") %>% nrow()
+
+sprintf("The number of times Jocasta has died is: %d. The number of times Jocasta has returned is: %d.", numDeath, numReturn)
+```
+
+    ## [1] "The number of times Jocasta has died is: 5. The number of times Jocasta has returned is: 5."
+
+As seen above, the statement is correct. Jocasta specifically has died 5
+times and has returned all 5 times.
 
 ### - Team member -
 
