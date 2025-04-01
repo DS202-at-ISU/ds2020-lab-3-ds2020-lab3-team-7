@@ -336,4 +336,29 @@ every 7 months which I believe fairly falls within “or so” range. But
 the unqualified statement that a permanent death happens every 20 months
 is slightly off with the actual number being once every 19.875 months.
 
-### - Team member -
+### - Tanish Visanagiri -
+> “Eight out of 10 Avengers who died at some point 
+> have come back to life.” – fivethirtyeight.com
+
+```{r}
+died_at_least_once <- av %>% 
+  filter(Death1 == "YES" | Death2 == "YES" | Death3 == "YES" | Death4 == "YES" | Death5 == "YES") %>% 
+  nrow()
+  
+returned_at_least_once <- av %>% 
+  filter(
+    (Death1 == "YES" | Death2 == "YES" | Death3 == "YES" | Death4 == "YES" | Death5 == "YES") &
+      (Return1 == "YES" | Return2 == "YES" | Return3 == "YES" | Return4 == "YES" | Return5 == "YES")
+  ) %>%
+  nrow()
+
+ratio_returned <- returned_at_least_once / died_at_least_once
+
+sprintf(
+  "Out of %d Avengers who died at least once, %d eventually returned. That's %.2f%%, or about %.1f out of 10.",
+  died_at_least_once,
+  returned_at_least_once,
+  ratio_returned * 100,
+  ratio_returned * 10
+)
+```
