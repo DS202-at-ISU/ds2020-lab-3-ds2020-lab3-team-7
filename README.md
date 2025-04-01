@@ -300,6 +300,40 @@ sprintf("The number of times Jocasta has died is: %d. The number of times Jocast
 As seen above, the statement is correct. Jocasta specifically has died 5
 times and has returned all 5 times.
 
-### - Team member -
+### - Zach Malo -
+
+> “Given the Avengers’ 53 years in operation and overall mortality rate,
+> fans of the comics can expect one current or former member to die
+> every seven months or so, with a permanent death occurring once every
+> 20 months.”-fivethirtyeight.com
+
+``` r
+cat(sum(deaths$Died=='YES'),"deaths have occurred\n")
+```
+
+    ## 89 deaths have occurred
+
+``` r
+cat("A death happens once every",53*12/sum(deaths$Died=='YES'),"months!\n")
+```
+
+    ## A death happens once every 7.146067 months!
+
+``` r
+cat(sum(returns$Returned=='NO'),"permanent deaths have occurred\n") 
+```
+
+    ## 32 permanent deaths have occurred
+
+``` r
+cat("A permanent death happens once every",53*12/sum(returns$Returned=='NO'),"months!\n")
+```
+
+    ## A permanent death happens once every 19.875 months!
+
+I have found that a current or former member of the avengers dies about
+every 7 months which I believe fairly falls within “or so” range. But
+the unqualified statement that a permanent death happens every 20 months
+is slightly off with the actual number being once every 19.875 months.
 
 ### - Team member -
